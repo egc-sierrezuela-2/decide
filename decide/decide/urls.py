@@ -22,10 +22,14 @@ from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='Decide API')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('doc/', schema_view),
-    path('gateway/', include('gateway.urls')),
-    path('social-auth/', include('social_django.urls', namespace="social")),
+   path('login/', obtain_auth_token),
+    path('logout/', LogoutViewAPI.as_view()),
+    path('getuser/', GetUserViewAPI.as_view()),
+    path('register/', RegisterViewAPI.as_view()),
+    path('register-alt/', RegisterView.as_view()),
+    path('login-alt/', LoginView.as_view(),name="login"),
+    path("logout-alt/", auth_views.LogoutView.as_view(), name="logout"),
+    path('login-success/', SuccessView.as_view(),name="login-success")
 ]
 
 for module in settings.MODULES:

@@ -139,11 +139,27 @@ LOGOUT_REDIRECT_URL = 'login'
 SOCIAL_AUTH_FACEBOOK_KEY = '1264747420669126'
 SOCIAL_AUTH_FACEBOOK_SECRET = '7c0056d7c8eaf7a5860fd1e043083338'
 
+SOCIAL_AUTH_GITHUB_KEY = '90b033dd9f3f8519fa07'
+SOCIAL_AUTH_GITHUB_SECRET = 'fb6c0a504057833bd72e1cb063e5a74cccea6f7a'
+
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = '78ppaogakulk4n'         # Client ID
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = 'aAr8rmN2zlEzw6Vz' # Client Secret
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SCOPE = ['r_liteprofile', 'r_emailaddress']
+SOCIAL_AUTH_LINKEDIN_OAUTH2_FIELD_SELECTORS = ['email-address', 'formatted-name', 'public-profile-url', 'picture-url']
+SOCIAL_AUTH_LINKEDIN_OAUTH2_EXTRA_DATA = [
+    ('id', 'id'),
+    ('formattedName', 'name'),
+    ('emailAddress', 'email_address'),
+    ('pictureUrl', 'picture_url'),
+    ('publicProfileUrl', 'profile_url'),
+]
+
 AUTHENTICATION_BACKENDS = (
     'authentication.backends.EmailOrUsernameModelBackend',
     'social_core.backends.linkedin.LinkedinOAuth2',
     'social_core.backends.instagram.InstagramOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.github.GithubOAuth2',
 )
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -175,7 +191,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
