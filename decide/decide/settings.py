@@ -118,6 +118,7 @@ WSGI_APPLICATION = 'decide.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -126,6 +127,14 @@ DATABASES = {
         'PASSWORD': 'decide',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+    },
+    'prueba': {
+        'ENGINE': 'djongo',
+        'NAME': 'egc-sierrezuela-2',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'HOST': 'mongodb+srv://malphite:malphite@egc-sierrezuela-2.fxrpl.mongodb.net/egc-sierrezuela-2?retryWrites=true&w=majority'
+        }
     }
 }
 
