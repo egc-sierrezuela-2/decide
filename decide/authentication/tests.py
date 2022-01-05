@@ -51,7 +51,6 @@ class AuthTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
 
         user = response.json()
-        self.assertEqual(user['id'], 1)
         self.assertEqual(user['username'], 'voter1')
 
     def test_getuser_invented_token(self):
@@ -139,24 +138,29 @@ class AuthPageTextCase(TestCase):
         self.user.save()
 
     def test_form(self):
-        form = RegisterForm(data={'username':'Prueba','email':'prueba@decide.es','password':'password123','sexo':'mujer'})
+        form = RegisterForm(data={'username':'Prueba','email':'prueba@decide.es','password':'password123','sexo':'mujer','edad':'20'})
         
         self.assertTrue(form.is_valid())
 
     def test_form_no_username(self):
-        form = RegisterForm(data={'email':'prueba@decide.es','password':'password123','sexo':'mujer'})
+        form = RegisterForm(data={'email':'prueba@decide.es','password':'password123','sexo':'mujer','edad':'20'})
 
         self.assertEquals(form.errors['username'], ["This field is required."])
 
     def test_form_no_email(self):
-        form = RegisterForm(data={'username':'prueba','password':'password123','sexo':'mujer'})
+        form = RegisterForm(data={'username':'prueba','password':'password123','sexo':'mujer','edad':'20'})
 
         self.assertEquals(form.errors['email'], ["This field is required."])
 
     def test_form_no_password(self):
-        form = RegisterForm(data={'email':'prueba@decide.es','username':'prueba','sexo':'mujer'})
+        form = RegisterForm(data={'email':'prueba@decide.es','username':'prueba','sexo':'mujer','edad':'20'})
 
         self.assertEquals(form.errors['password'], ["This field is required."])
+
+    def test_form_no_sex(self):
+        form = RegisterForm(data={'email':'prueba@decide.es','password':'password123','username':'prueba','edad':'20'})
+
+        self.assertEquals(form.errors['sexo'], ["This field is required."])
 
     def test_register_get(self):
         response = self.client.get("/authentication/register-alt/")
@@ -171,14 +175,14 @@ class AuthPageTextCase(TestCase):
         self.assertEquals(response.status_code,403)
 
     def test_register_valid(self):
-        response = self.client.post("/authentication/register-alt/",data={'username':'Prueba','email':'prueba@decide.es','password':'password123','sexo':'mujer'})
+        response = self.client.post("/authentication/register-alt/",data={'username':'Prueba','email':'prueba@decide.es','password':'password123','sexo':'mujer','edad':'20'})
         user = User.objects.get(username="Prueba")
 
         self.assertRedirects(response,"/authentication/login-success", target_status_code=301)
         self.assertTrue(user.is_authenticated)
 
     def test_register_user_exists(self):
-        response = self.client.post("/authentication/register-alt/",data={'username':'voter1','email':'prueba@decide.es','password':'password123','sexo':'mujer'})
+        response = self.client.post("/authentication/register-alt/",data={'username':'voter1','email':'prueba@decide.es','password':'password123','sexo':'mujer','edad':'20'})
 
         self.assertEquals(response.status_code,HTTPStatus.OK)
         self.assertEqual(response.context['message'],'Usuario ya existente.')
@@ -226,3 +230,19 @@ class AuthPageTextCase(TestCase):
 
         self.assertRedirects(response,"/authentication/login-alt/")
         self.assertTrue('_auth_user_id' not in self.client.session)
+
+    def test_login_success_view(self):
+        self.client.login(username='voter1', password='123')
+
+        response = self.client.get("/authentication/login-success/")
+
+        self.assertEquals(response.status_code,HTTPStatus.OK)
+        self.assertTemplateUsed(response=response, template_name='successful_login.html')
+
+        
+    def test_login_success_view_unauthorized(self):
+        response = self.client.get("/authentication/login-success/")
+
+        self.assertEquals(response.status_code,401)
+
+        

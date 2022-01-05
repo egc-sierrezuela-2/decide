@@ -7,3 +7,4 @@ class RegisterForm(forms.Form):
     email = forms.CharField(label='Email',widget=forms.EmailInput,required=True)
     password = forms.CharField(label='Contraseña',widget=forms.PasswordInput,required=True)
     sexo = forms.ChoiceField(choices=sexos, required=True, label="Seleccione su sexo")
+    edad = forms.IntegerField(required=True)
