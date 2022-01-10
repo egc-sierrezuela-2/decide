@@ -69,18 +69,18 @@ MODULES = [
 ]
 
 
-BASEURL = 'https://egc-sierrezuela-2.herokuapp.com'
+BASEURL = 'https://sierrezuela2-decide.herokuapp.com/'
 
 APIS = {
-    'authentication': 'https://egc-sierrezuela-2.herokuapp.com/',
-    'base': 'https://egc-sierrezuela-2.herokuapp.com/',
-    'booth': 'hhttps://egc-sierrezuela-2.herokuapp.com/',
-    'census': 'https://egc-sierrezuela-2.herokuapp.com/',
-    'mixnet': 'https://egc-sierrezuela-2.herokuapp.com/',
-    'postproc': 'https://egc-sierrezuela-2.herokuapp.com/',
-    'store': 'https://egc-sierrezuela-2.herokuapp.com/',
-    'visualizer': 'https://egc-sierrezuela-2.herokuapp.com/',
-    'voting': 'https://egc-sierrezuela-2.herokuapp.com/',
+    'authentication': BASEURL,
+    'base': BASEURL,
+    'booth': BASEURL,
+    'census': BASEURL,
+    'mixnet': BASEURL,
+    'postproc': BASEURL,
+    'store': BASEURL,
+    'visualizer': BASEURL,
+    'voting': BASEURL,
 }
 
 
