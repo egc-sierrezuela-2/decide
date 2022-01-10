@@ -36,10 +36,8 @@ jobs:
         pip install codacy-coverage
     - name: Run migrations
       run: cd decide;python manage.py makemigrations; python manage.py migrate
-    - name: run store tests
-      run: cd decide;./manage.py test store/tests.py
     - name: run authentication tests
-      run: cd decide;./manage.py test authentication/tests.py
+      run: cd decide;./manage.py test authentication.tests 
     - name: run authentication and store tests with Coverage
       run: cd decide;coverage run ./manage.py test authentication/tests.py;coverage run ./manage.py test store/tests.py; coverage xml;
     - name: Codacy Coverage Reporter
