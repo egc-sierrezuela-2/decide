@@ -69,7 +69,7 @@ MODULES = [
 ]
 
 
-BASEURL = 'https://sierrezuela2-decide.herokuapp.com/'
+BASEURL = 'http://localhost:8000/'
 
 APIS = {
     'authentication': BASEURL,
