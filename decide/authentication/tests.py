@@ -8,11 +8,6 @@ from rest_framework.authtoken.models import Token
 from .forms import RegisterForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
 from django.test import LiveServerTestCase
 from base.tests import BaseTestCase
 
