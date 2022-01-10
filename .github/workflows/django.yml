@@ -34,7 +34,7 @@ jobs:
         pip install -r requirements.txt
         pip install codacy-coverage
     - name: Run migrations
-      run: cd decide;python manage.py migrate
+      run: cd decide;python manage.py makemigrations;python manage.py migrate
     - name: Run Auth tests     
       run: cd decide;./manage.py test authentication/tests.py
     - name: Run tests with coverage   
