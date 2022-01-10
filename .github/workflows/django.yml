@@ -3,12 +3,11 @@ name: Python application
 on: [push]
 
 jobs:
-  build:
-    strategy:
-        matrix:
-          pyversion: ['3.5','3.8']
+  build: 
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        pyversion: ['3.5','3.8']
     services:
       postgres:
         image: postgres:10.8
@@ -35,11 +34,11 @@ jobs:
         pip install -r requirements.txt
         pip install codacy-coverage
     - name: Run migrations
-      run: cd decide;python manage.py makemigrations; python manage.py migrate
-    - name: run authentication tests
-      run: cd decide;./manage.py test authentication.tests 
-    - name: run authentication and store tests with Coverage
-      run: cd decide;coverage run ./manage.py test authentication/tests.py;coverage run ./manage.py test store/tests.py; coverage xml;
+      run: cd decide;python manage.py migrate
+    - name: Run Auth tests     
+      run: cd decide;./manage.py test authentication/tests.py
+    - name: Run tests with coverage   
+      run: cd decide;coverage run ./manage.py test authentication/tests.py;coverage xml;
     - name: Codacy Coverage Reporter
       uses: codacy/codacy-coverage-reporter-action@v1.1.0
       with:
@@ -48,8 +47,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: ${{github.ref == 'refs/heads/deployGitHubActions'}}
+    if: ${{github.ref == 'refs/heads/deployGitHubActions' }} 
     steps:
+    - run: echo "🔎 The name of your branch is ${{ github.ref }}."
     - uses: actions/checkout@v1
     - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
@@ -57,4 +57,3 @@ jobs:
           heroku_app_name: "sierrezuela2-decide"
           heroku_email: "sierrezueladecide2@gmail.com"
     - run: heroku run -a sierrezuela2-decide sh -c "python decide/manage.py shell -c \"from django.contrib.auth.models import User; User.objects.filter(username='admin') or User.objects.create_superuser('admin', 'admin@example.com', 'admin')\""
-
