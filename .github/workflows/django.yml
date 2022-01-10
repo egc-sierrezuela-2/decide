@@ -36,7 +36,7 @@ jobs:
     - name: Run migrations
       run: cd decide;python manage.py makemigrations;python manage.py migrate
     - name: Run Auth tests     
-      run: cd decide;./manage.py test authentication/tests.py
+      run: cd decide;./manage.py test authentication.tests
     - name: Run tests with coverage   
       run: cd decide;coverage run ./manage.py test authentication/tests.py;coverage xml;
     - name: Codacy Coverage Reporter
